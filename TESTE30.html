@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Doces & Salgados 3L </title>
+  <style>
+    /* Estilo geral */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fff0f5; /* Rosa bem claro */
+      color: #5c2a4a; /* Roxo escuro */
+      margin: 0;
+      padding: 0 20px 40px;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Cabeçalho */
+    header {
+      text-align: center;
+      background-color: #d63384; /* Rosa forte */
+      color: white;
+      padding: 20px 10px;
+      margin: 0 -20px 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    /* Estilo do novo logo */
+    header .logo {
+      width: 120px; /* Tamanho menor */
+      height: auto;
+      border-radius: 16px; /* Bordas arredondadas */
+      background-color: #ffffff; /* Fundo branco para destacar as cores */
+      padding: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
+    }
+
+    /* Títulos de seção */
+    h2 {
+      border-bottom: 2px solid #d63384;
+      padding-bottom: 5px;
+    }
+
+    /* Card de produto */
+    .produto {
+      background-color: #ffffff;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    .produto:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    .produto img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-right: 15px;
+      background-color: #f0f0f0;
+    }
+
+    /* Botões de quantidade */
+    .produto button {
+      margin: 5px;
+      padding: 8px 12px;
+      background-color: #d63384;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .produto button:hover {
+      background-color: #b32a6c;
+      transform: scale(1.05);
+    }
+
+    /* Display de quantidade */
+    .quantidade {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .quantidade span {
+      font-size: 18px;
+      font-weight: bold;
+      min-width: 25px;
+      text-align: center;
+    }
+
+    /* Botão principal (Finalizar Pedido) */
+    .botao {
+      display: block;
+      width: 100%;
+      max-width: 400px;
+      margin: 30px auto 0;
+      background-color: #d63384;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 18px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .botao:hover {
+      background-color: #b32a6c;
+      transform: scale(1.02);
+    }
+
+    /* Seção do Carrinho */
+    #carrinho {
+      background: #fff;
+      border: 2px solid #d63384;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    #carrinho ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    #carrinho li {
+      padding: 5px 0;
+    }
+    #total-carrinho {
+        font-size: 1.2em;
+        font-weight: bold;
+        text-align: right;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    /* Campo de observações */
+    .observacoes {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    /* Estilo para as opções de pagamento */
+    .pagamento-titulo {
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    .opcoes-pagamento {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .opcoes-pagamento label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .opcoes-pagamento input {
+        margin-right: 5px;
+    }
+
+    /* Rodapé */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+      color: gray;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://i.imgur.com/b3s5kWJ.png" alt="Logo Doces & Salgados 3L" class="logo">
+    <h1>Doces, Salgados e Bebidas 3L 🍓🥟🥤</h1>
+    <p>Feitos com carinho e sabor!</p>
+  </header>
+
+  <section id="produtos">
+    <h2>Doces</h2>
+    <div class="produto" data-nome="Brigadeiro Gourmet" data-preco="2.50">
+      <img src="https://i.imgur.com/jysdDAq.jpeg" alt="Brigadeiro">
+      <div>
+        <h3>Brigadeiro Gourmet</h3>
+        <p>R$ 2,50</p>
+        <div class="quantidade">
+          <button onclick="alterarQtd(this, -1)">–</button>
+          <span>0</span>
+          <button onclick="alterarQtd(this, 1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produto" data-nome="Beijinho" data-preco="2.50">
+      <img src="https://i.imgur.com/N0Zfw5Q.png" alt="Beijinho">
+      <div>
+        <h3>Beijinho</h3>
+        <p>R$ 2,50</p>
+        <div class="quantidade">
+          <button onclick="alterarQtd(this, -1)">–</button>
+          <span>0</span>
+          <button onclick="alterarQtd(this, 1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produto" data-nome="Mousse" data-preco="5.00">
+      <img src="https://i.imgur.com/0uOCzpv.jpeg" alt="Mousse">
+      <div>
+        <h3>Mousse</h3>
+        <p>R$ 5,00 (Cupuaçu, Maracujá, Morango, Uva)</p>
+        <div class="quantidade">
+          <button onclick="alterarQtd(this, -1)">–</button>
+          <span>0</span>
+          <button onclick="alterarQtd(this, 1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produto" data-nome="Bolo de Pote" data-preco="7.00">
+      <img src="https://i.imgur.com/cRXVMZU.jpeg" alt="Bolo de Pote">
+      <div>
+        <h3>Bolo de Pote</h3>
+        <p>R$ 7,00 (diversos sabores)</p>
+        <div class="quantidade">
+          <button onclick="alterarQtd(this, -1)">–</button>
+          <span>0</span>
+          <button onclick="alterarQtd(this, 1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produto" data-nome="Bolo para Corte" data-preco="15.00">
+        <img src="https://i.imgur.com/jj9zry6.jpeg" alt="Bolo para Corte">
+        <div>
+          <h3>Bolo para Corte</h3>
+          <p>R$ 15,00 (sabores: Leite, Chocolate, Formigueiro)</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+    <div class="produto" data-nome="Dindins Gourmet" data-preco="2.00"> <img src="https://i.imgur.com/bkeTCon.jpegc="" alt="Dindin">
+        <div>
+          <h3>Dindins Gourmet</h3>
+          <p>R$ 2,00 (sabores: Coco, Chocolate, Morango, Maracujá, Cupuaçu, Tapioca, Brigadeiro)</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+    <h2>Bebidas & Sucos</h2>
+    <div class="produto" data-nome="Suco Natural" data-preco="5.00">
+      <img src="https://i.imgur.com/1TiI8wq.jpeg" alt="Suco Natural">
+      <div>
+        <h3>Suco Natural</h3>
+        <p>R$ 5,00 (sabores: Cupuaçu, Maracujá, Goiaba, Graviola)</p>
+        <div class="quantidade">
+          <button onclick="alterarQtd(this, -1)">–</button>
+          <span>0</span>
+          <button onclick="alterarQtd(this, 1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produto" data-nome="Coca-Cola 350ml" data-preco="7.00">
+      <img src="https://i.imgur.com/tTffB7S.jpeg" alt="Refrigerantes">
+      <div>
+        <h3>Coca-Cola</h3>
+        <p>R$ 7,00</p>
+        <div class="quantidade">
+          <button onclick="alterarQtd(this, -1)">–</button>
+          <span>0</span>
+          <button onclick="alterarQtd(this, 1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produto" data-nome="Fanta Laranja 340ml" data-preco="7.00">
+        <img src="https://i.imgur.com/J0Muzbu.jpeg" alt="Refrigerantes">
+        <div>
+          <h3>Fanta Laranja 340ml</h3>
+          <p>R$ 7,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="produto" data-nome="Fanta Uva 350ml" data-preco="7.00">
+        <img src="https://i.imgur.com/J0Muzbu.jpeg" alt="Refrigerantes">
+        <div>
+          <h3>Fanta Uva 350ml</h3>
+          <p>R$ 7,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="produto" data-nome="Baré Lata 350ml" data-preco="6.00">
+        <img src="https://i.imgur.com/tejos6B.jpeg" alt="Refrigerantes">
+        <div>
+          <h3>Baré Lata 350ml</h3>
+          <p>R$ 6,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="produto" data-nome="Real Comum 250ml" data-preco="5.00">
+        <img src="https://i.imgur.com/xcOAT3Z.jpeg" alt="Refrigerantes">
+        <div>
+          <h3>Real Comum 250ml</h3>
+          <p>R$ 5,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="produto" data-nome="Real Gold 250ml" data-preco="5.00">
+        <img src="https://i.imgur.com/xcOAT3Z.jpeg" alt="Refrigerantes">
+        <div>
+          <h3>Real Gold 250ml</h3>
+          <p>R$ 5,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="produto" data-nome="Tuchaua 250ml" data-preco="5.00">
+        <img src="https://i.imgur.com/xcOAT3Z.jpeg" alt="Refrigerantes">
+        <div>
+          <h3>Tuchaua 250ml</h3>
+          <p>R$ 5,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+    
+    <h2>Pastéis</h2>
+    <div class="produto" data-nome="Pastel de Carne" data-preco="10.00">
+      <img src="https://i.imgur.com/po3QFfU.jpeg" alt="Pastel">
+      <div>
+        <h3>Pastel de Carne</h3>
+        <p>R$ 10,00</p>
+        <div class="quantidade">
+          <button onclick="alterarQtd(this, -1)">–</button>
+          <span>0</span>
+          <button onclick="alterarQtd(this, 1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produto" data-nome="Pastel de Frango com Catupiry" data-preco="10.00">
+        <img src="https://i.imgur.com/ZDrNQN3.jpeg" alt="Pastel">
+        <div>
+          <h3>Pastel de Frango com Catupiry</h3>
+          <p>R$ 10,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="produto" data-nome="Pastel de Calabresa" data-preco="10.00">
+        <img src="https://i.imgur.com/ZDrNQN3.jpeg" alt="Pastel">
+        <div>
+          <h3>Pastel de Calabresa</h3>
+          <p>R$ 10,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="produto" data-nome="Pastel de Queijo" data-preco="10.00">
+        <img src="https://i.imgur.com/ZDrNQN3.jpeg" alt="Pastel">
+        <div>
+          <h3>Pastel de Queijo</h3>
+          <p>R$ 10,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="produto" data-nome="Pastel de Banana com Queijo" data-preco="10.00">
+        <img src="https://i.imgur.com/ZDrNQN3.jpeg" alt="Pastel">
+        <div>
+          <h3>Pastel de Banana com Queijo</h3>
+          <p>R$ 10,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="produto" data-nome="Pastel Nordestino" data-preco="10.00">
+        <img src="https://i.imgur.com/ZDrNQN3.jpeg" alt="Pastel">
+        <div>
+          <h3>Pastel Nordestino</h3>
+          <p>R$ 10,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="produto" data-nome="Pastel de Pizza" data-preco="10.00">
+        <img src="https://i.imgur.com/ZDrNQN3.jpeg" alt="Pastel">
+        <div>
+          <h3>Pastel de Pizza</h3>
+          <p>R$ 10,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="produto" data-nome="Pastel Misto" data-preco="10.00">
+        <img src="https://i.imgur.com/ZDrNQN3.jpeg" alt="Pastel">
+        <div>
+          <h3>Pastel Misto</h3>
+          <p>R$ 10,00</p>
+          <div class="quantidade">
+            <button onclick="alterarQtd(this, -1)">–</button>
+            <span>0</span>
+            <button onclick="alterarQtd(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <section id="carrinho" style="display: none;">
+    <h2>🛒 Seu Pedido</h2>
+    <ul id="itens-carrinho"></ul>
+    <p id="total-carrinho">Total: R$ 0,00</p>
+    
+    <p class="pagamento-titulo">Forma de Pagamento:</p>
+    <div class="opcoes-pagamento">
+        <label>
+            <input type="radio" name="pagamento" value="PIX" checked> PIX
+        </label>
+        <label>
+            <input type="radio" name="pagamento" value="Dinheiro"> Dinheiro
+        </label>
+        <label>
+            <input type="radio" name="pagamento" value="Cartão"> Cartão de Crédito/Débito
+        </label>
+    </div>
+    
+    <textarea id="obs" class="observacoes" placeholder="Observações: sabores, troco para quanto, etc."></textarea>
+    <a id="finalizar" class="botao" href="#" target="_blank">Finalizar Pedido no WhatsApp</a>
+  </section>
+
+  <footer>
+    Formas de pagamento: PIX, Dinheiro, Cartão 💳
+  </footer>
+
+  <script>
+    const numeroWhatsApp = '5592994525990';
+
+    document.getElementById('obs').addEventListener('input', atualizarCarrinho);
+    document.querySelectorAll('input[name="pagamento"]').forEach(radio => {
+        radio.addEventListener('change', atualizarCarrinho);
+    });
+
+    function alterarQtd(botao, valor) {
+      const span = botao.parentElement.querySelector('span');
+      let quantidade = parseInt(span.textContent);
+      quantidade = Math.max(0, quantidade + valor);
+      span.textContent = quantidade;
+      atualizarCarrinho();
+    }
+
+    function atualizarCarrinho() {
+      const carrinhoSection = document.getElementById('carrinho');
+      const lista = document.getElementById('itens-carrinho');
+      const totalElemento = document.getElementById('total-carrinho');
+      const produtos = document.querySelectorAll('.produto');
+      const obs = document.getElementById('obs').value;
+      
+      const formaPagamento = document.querySelector('input[name="pagamento"]:checked').value;
+
+      lista.innerHTML = '';
+      let itens = [];
+      let total = 0;
+
+      produtos.forEach(produto => {
+        const nome = produto.getAttribute('data-nome');
+        const preco = parseFloat(produto.getAttribute('data-preco'));
+        const qtd = parseInt(produto.querySelector('span').textContent);
+        
+        if (qtd > 0) {
+          const subtotal = qtd * preco;
+          total += subtotal;
+
+          const itemTexto = `${qtd}x ${nome} - R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+          itens.push(itemTexto);
+          
+          const li = document.createElement('li');
+          li.textContent = itemTexto;
+          lista.appendChild(li);
+        }
+      });
+      
+      if (total > 0) {
+        carrinhoSection.style.display = 'block';
+        totalElemento.textContent = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
+
+        const resumoPedido = itens.map(i => '• ' + i).join('\n');
+        const totalTexto = `\n*Total: R$ ${total.toFixed(2).replace('.', ',')}*`;
+        const pagamentoTexto = `\n\n*Forma de Pagamento:* ${formaPagamento}`;
+        const obsTexto = obs ? `\n\n*Observações:*\n${obs}` : '';
+        const textoFinal = `Olá! Quero fazer o seguinte pedido:\n\n${resumoPedido}\n${totalTexto}${pagamentoTexto}${obsTexto}`;
+
+        const mensagem = encodeURIComponent(textoFinal);
+        document.getElementById('finalizar').href = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+
+      } else {
+        carrinhoSection.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
